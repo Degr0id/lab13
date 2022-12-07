@@ -10,10 +10,10 @@ def getfilename():
 def create_db(file_name):
     while True:
         try:
-            f = open(file_name, 'w', encoding='Windows-1251')
+            f = open(file_name, 'w')
             num = int(input("Введите количество записей: "))
         except OSError:
-            print("Файл не найден")
+            print("Некорректный путь к файлу")
             return -1
         except ValueError:
             print("Пожалуйста введите целое число")
@@ -32,14 +32,14 @@ def create_db(file_name):
         #     i += 1
         # else:
         #     print("Ошибка в вводе полей")
-        f.write(str(person))
+        f.write(f"{str(person)}\n")
         i += 1
     f.close()
 
 
 def output(file_name):
     try:
-        f = open(file_name, 'r', encoding='Windows-1251')
+        f = open(file_name, 'r')
     except OSError:
         print("Файл не найден")
         return -1
@@ -56,7 +56,7 @@ def output(file_name):
               f"{'Балл'.center(widths[2])}|{'Допущен'.center(widths[3])}\n{'-' * tt_w}")
         for line in f:
             pers = Student.Stud(line.strip().split("|"), widths)
-            print(str(pers), end='')
+            print(str(pers))
         print(f"{'-' * tt_w}")
     else:
         print("Неверный формат базы данных")
@@ -65,13 +65,14 @@ def output(file_name):
 
 def add(file_name):
     try:
-        f = open(file_name, 'r', encoding='Windows-1251')
+        f = open(file_name, 'r')
     except OSError:
         print("Файл не найден")
         return -1
-    if addit.check_if_bd(f):
-        f = open(file_name, 'a', encoding='Windows-1251')
-        if f.seek(2) != "\n":
+    tmp = addit.check_if_bd(f, True)
+    if tmp[0]:
+        f = open(file_name, 'a')
+        if not tmp[1].endswith("\n"):
             f.write("\n")
         pname = input("Введите имя (Имя Ф.): ")
         pyear = input("Введите год рождения: ")
@@ -86,7 +87,7 @@ def add(file_name):
 
 def search_by_one(file_name):
     try:
-        f = open(file_name, 'r', encoding='Windows-1251')
+        f = open(file_name, 'r')
     except OSError:
         print("Файл не найден")
         return -1
@@ -120,7 +121,7 @@ def search_by_one(file_name):
 
 def search_by_two(file_name):
     try:
-        f = open(file_name, 'r', encoding='Windows-1251')
+        f = open(file_name, 'r')
     except OSError:
         print("Файл не найден")
         return -1

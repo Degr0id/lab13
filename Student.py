@@ -13,7 +13,7 @@ class Stud:
 
     def __str__(self):
         return f"{self.name.center(self.wname)}|{self.year.center(self.wyear)}|" \
-               f"{self.res.center(self.wres)}|{self.passed.center(self.wpassed)}\n"
+               f"{self.res.center(self.wres)}|{self.passed.center(self.wpassed)}"
 
     def check_fields(self):
         part_name = self.name.split()

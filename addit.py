@@ -1,14 +1,19 @@
 import tools
 
 
-def check_if_bd(file):
-    good = True
-    for line in file:
-        if line.count("|") != 3:
-            good = False
-            break
+def check_if_bd(file, with_last=False):
+    last = ""
+    try:
+        for line in file:
+            if line.count("|") != 3:
+                return False
+            last = line
+    except UnicodeDecodeError:
+        return False
     file.seek(0)
-    return good
+    if with_last:
+        return True, last
+    return True
 
 
 def max_len_field(file):
@@ -32,7 +37,7 @@ def menu():
               "5) Поиск по одному полю\n"
               "6) Поиск по двум полям\n"
               "9) Очистить ввод\n"
-              "0) Выход.")
+              "0) Выход")
         user_input = input("Ввод-->")
         if user_input == "1":
             file_name = tools.getfilename()
